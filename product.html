@@ -480,7 +480,21 @@
             let cartbtn = document.createElement("button");
             cartbtn.setAttribute("id","cartbtn");
             cartbtn.innerHTML = '<i class="fa-solid fa-cart-shopping">Add to cart</i>';
+            cartbtn.addEventListener("click",function(){
+                let cartarr = JSON.parse(localStorage.getItem("cart-contents")) || [];
+                cartarr.push(ele);
+                let currtotal = localStorage.getItem("total-price") || 0;
+                currtotal = Number(currtotal)+Number(ele.price);
+                localStorage.setItem("total-price",currtotal);
+                localStorage.setItem("cart-contents", JSON.stringify(cartarr));
+                let qtyarr = JSON.parse(localStorage.getItem("qtyarr")) || [];
+                let objqty = {qty : 1};
+                qtyarr.push(objqty);
+                localStorage.setItem("qtyarr",JSON.stringify(qtyarr));
+                alert("Item added to the cart succesfully!");
+            })
             butoon.append(cartbtn);
+            cartbtn.style.cursor ="pointer";
             description.append(title,price,butoon);
             containeritems.append(image,description);
             containeritems.addEventListener("click",function(){
